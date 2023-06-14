@@ -14,15 +14,17 @@ const infoToLocal = throttle(() => {
 }, 500);
 
 function infoDownload() {
-  const { email = '', message = '' } = JSON.parse(
-    localStorage.getItem('feedback-form-state') || '{}'
-  );
-  const emailInput = document.querySelector('input[name="email"]');
-  const messageInput = document.querySelector('textarea[name="message"]');
+  const infoFromeLocal = localStorage.getItem('feedback-form-state');
+  // console.log(infoFromeLocal);
+  const formState = infoFromeLocal
+    ? JSON.parse(infoFromeLocal)
+    : { email: '', message: '' };
 
-  emailInput.value = email;
-  messageInput.value = message;
+  emailElement.value = formState.email;
+  messageElement.value = formState.message;
 }
+
+infoDownload();
 
 emailElement.addEventListener(`input`, infoToLocal);
 messageElement.addEventListener(`input`, infoToLocal);
